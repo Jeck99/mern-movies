@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
-
-mongoose
-    .connect('mongodb://127.0.0.1:27017/cinema') //creating the connection to cinema db
+const DBConcoctionString = "mongodb+srv://jacoUser:jacoUser@cluster0.zrkm0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const DBConcoctionString = process.env.DB;
+mongoose.connect(DBConcoctionString,       //creating the connection to cinema db
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log('MongoDB Connected...')).catch(err => console.log(err))
     .catch(error => {                            //error handling
         console.error('Connection error', error.message)
     })

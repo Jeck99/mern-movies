@@ -1,3 +1,6 @@
+// const dotenv = require("dotenv");
+// dotenv.config();
+
 //general imports:
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -14,7 +17,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded())
 //use of cors so our server will be able to get requests
 app.use(cors())
+//*****************************************************************/
 
+const path = require('path'); 
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, '../client/build')));
+    // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    });
+}
+//*******************************************************************/
 db.on('error',()=>{console.log("connection error")})
 
 app.listen(PORT,()=>{

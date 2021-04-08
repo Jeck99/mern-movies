@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getAllMovies} from "../service/movies-service";
+import { getAllMovies } from "../service/movies-service";
 import MovieCard from "../components/movie-card.component";
 import './home.css';
 export default function Home(props) {
@@ -12,7 +12,7 @@ export default function Home(props) {
     return (
         <div id={"homeDiv"}>
             home
-            {React.Children.toArray(movies.map((item) => {return <MovieCard image={"pictures/loader.gif"} title={item.movieName} text={item.rating} /> }))}
+            {movies ? React.Children.toArray(movies.map((item) => { return <MovieCard image={"pictures/loader.gif"} title={item.movieName} text={item.rating} /> })) : ''}
         </div>
     )
 }
