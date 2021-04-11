@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd client/src && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "setup": "npm install && cd client && npm install",
     "start": "node server/index.js",
     "server": "set PORT=8080 && nodemon server/index.js",
