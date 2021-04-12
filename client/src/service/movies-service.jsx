@@ -1,4 +1,3 @@
-const API = 'http://localhost:8080/movies/'
 /**
  * async function that updating the movies state
  * and returns the movies
@@ -6,7 +5,7 @@ const API = 'http://localhost:8080/movies/'
  */
 export async function getAllMovies() {
     try {
-        return await fetch(API + 'all')
+        return await fetch('/all')
             .then((res) => { return res.json() })
             .then(results => { return results.data })
     } catch (error) {
@@ -26,7 +25,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`${API}saveMovie`,options)
+        return await fetch(`/saveMovie`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
@@ -43,7 +42,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`${API}movie/${movieId}`,options)
+        return await fetch(`/movie/${movieId}`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
