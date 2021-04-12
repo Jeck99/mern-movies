@@ -7,7 +7,7 @@ const API = `http://localhost:${PORT}/movies/`
  */
 export async function getAllMovies() {
     try {
-        return await fetch('/all')
+        return await fetch(API+'/all')
             .then((res) => { return res.json() })
             .then(results => { return results.data })
     } catch (error) {
