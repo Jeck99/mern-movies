@@ -1,5 +1,5 @@
 const PORT = process.env.PORT || 8080;
-const API = `https://moviesmern.herokuapp.com/movies/`
+const API = `http://localhost:${PORT}/movies/`
 /**
  * async function that updating the movies state
  * and returns the movies
