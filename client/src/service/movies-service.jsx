@@ -1,3 +1,5 @@
+const PORT = process.env.PORT || 8080;
+const API = `http://localhost:${PORT}/movies/`
 /**
  * async function that updating the movies state
  * and returns the movies
@@ -25,7 +27,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`/saveMovie`,options)
+        return await fetch(`${API}saveMovie`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
@@ -42,7 +44,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`/movie/${movieId}`,options)
+        return await fetch(`${API}movie/${movieId}`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
