@@ -18,13 +18,13 @@ app.use(bodyParser.urlencoded())
 //use of cors so our server will be able to get requests
 app.use(cors())
 const path = require('path');
-
 db.on('error', () => { console.log("connection error") })
-
+app.listen(PORT, () => {
+    console.log(`mern server is live and up on port: ${PORT}`);
+})
 app.use('/movies', moviesRouter)
 //*****************************************************************/
-
-if (process.env.NODE_ENV === 'PROD') {
+if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static(path.join(__dirname, "client", "build")))
     // Handle React routing, return all requests to React app
@@ -33,6 +33,3 @@ if (process.env.NODE_ENV === 'PROD') {
     });
 }
 //*******************************************************************/
-app.listen(PORT, () => {
-    console.log(`mern server is live and up on port: ${PORT}`);
-})

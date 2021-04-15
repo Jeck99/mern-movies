@@ -1,5 +1,5 @@
 // const PORT = process.env.PORT || 8080;
-// const API = `http://localhost:${PORT}/movies/`
+const API =process.env.NODE_ENV === 'production'? `https://moviesmern.herokuapp.com`:'http://localhost:8080';
 /**
  * async function that updating the movies state
  * and returns the movies
@@ -7,7 +7,7 @@
  */
 export async function getAllMovies() {
     try {
-        return await fetch(`/movies/all`)
+        return await fetch(`${API}/movies/all`)
             .then((res) => { return res.json() })
             .then(results => { return results.data })
     } catch (error) {
@@ -27,7 +27,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`/movies/saveMovie`,options)
+        return await fetch(`${API}/movies/saveMovie`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
@@ -44,7 +44,7 @@ export async function saveMovieToDb(movieToSave) {
         headers:{'Content-Type': 'application/json'}
     }
     try {
-        return await fetch(`/movies/movie/${movieId}`,options)
+        return await fetch(`${API}/movies/movie/${movieId}`,options)
             .then((res) => { return res.json() })
     } catch (error) {
         console.log(error);
