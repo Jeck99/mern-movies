@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { registerUserToDb } from "../service/users-service";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router';
 
-const Register = () => {
+import { registerUserToDb } from "../service/users-service";
+import { registerUser } from "../redux/actions/authActions";
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+  });
+const Register = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [errors, setErrors] = useState({});
-
+    useEffect(()=> {
+        if (props.auth.isAuthenticated) {
+          props.history.push("/home");
+        }
+      },
+      []
+    )
     const onNameChange = e => {
         setName(e.target.value);
     };
@@ -29,23 +42,17 @@ const Register = () => {
             password: password,
             password2: password2
         };
-        registerUserToDb(newUser).then(res=>{console.log(res);})
-        console.log(newUser);
+        props.registerUser(newUser,props.history);
     };
     return (
         <div className="container">
             <div className="row">
                 <div className="col s8 offset-s2">
-                    <Link to="/" className="btn-flat waves-effect">
-                        <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
+                    <Link to="/" className="btn-flat waves-effect"> Back to home</Link>
                     <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                        <h4>
-                            <b>Register</b> below
-              </h4>
+                        <h4><b>Register</b> below</h4>
                         <p className="grey-text text-darken-1">
-                            Already have an account? <Link to="/login">Log in</Link>
+                            Already have an account? <Link to="/">Log in</Link>
                         </p>
                     </div>
                     <form noValidate onSubmit={onSubmit}>
@@ -109,4 +116,4 @@ const Register = () => {
         </div>
     );
 }
-export default Register;
+export default withRouter(connect( mapStateToProps,{ registerUser })(Register));

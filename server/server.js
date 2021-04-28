@@ -11,6 +11,10 @@ const db = require('./DB');
 //import router module
 const moviesRouter = require('./routes/movie-router')
 const path = require('path');
+const userRouter = require("./routes/user-router");
+// Passport config
+const passport = require("passport");
+const passportFunc = require("./config/passport");
 //configuration of the port based on the env
 const PORT = process.env.PORT || 8080;
 //use of body-parser in order to reach req.body
@@ -22,6 +26,10 @@ db.on('error', () => { console.log("connection error") })
 app.listen(PORT, () => {
     console.log(`mern server is live and up on port: ${PORT}`);
 })
+// Passport middleware
+app.use(passport.initialize());
+// Routes
+app.use('/users', userRouter);
 app.use('/movies', moviesRouter)
 //*****************************************************************/
 if (process.env.NODE_ENV === 'production') {

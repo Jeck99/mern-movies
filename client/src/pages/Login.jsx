@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { loginUser } from "../service/users-service";
-function Login() {
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/authActions";
+import { withRouter } from 'react-router';
+
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {
+        if (props.auth.isAuthenticated) {
+            props.history.push("/home");
+        }
+    })
     const onEmailChange = e => {
         setEmail(e.target.value);
     };
@@ -18,23 +31,20 @@ function Login() {
             email: email,
             password: password
         };
-        loginUser(userData).then(res=>{console.log(res);})
-        console.log(userData);
+        props.loginUser(userData, props.history);
     };
     return (
         <div className="container">
             <div style={{ marginTop: "4rem" }} className="row">
                 <div className="col s8 offset-s2">
                     <Link to="/" className="btn-flat waves-effect">
-                        <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
+                        Back to home
+                        </Link>
                     <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                        <h4>
-                            <b>Login</b> below
-              </h4>
+                        <h4><b>Login</b> below</h4>
                         <p className="grey-text text-darken-1">
-                            Don't have an account? <Link to="/register">Register</Link>
+                            Don't have an account?
+                            <Link to="/register">Register</Link>
                         </p>
                     </div>
                     <form noValidate onSubmit={onSubmit}>
@@ -67,8 +77,7 @@ function Login() {
                                     marginTop: "1rem"
                                 }}
                                 type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                            >
+                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
                                 Login
                             </button>
                         </div>
@@ -78,4 +87,4 @@ function Login() {
         </div>
     );
 }
-export default Login;
+export default withRouter(connect(mapStateToProps, { loginUser })(Login));
