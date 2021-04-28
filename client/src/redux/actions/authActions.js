@@ -16,21 +16,19 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
-
 // Login - get user token
 export const loginUser = (userData, history)  => dispatch => {
   loginUserApi(userData)
     .then(res => {
       // Save to localStorage and Set token to localStorage
-      const { token } = res.token;
       localStorage.setItem("jwtToken", res.token);
       // Set token to Auth header
-      setAuthToken(token);
+      setAuthToken(res.token);
       // Decode token to get user data
-      const decoded = jwt_decode(token);
+      const decoded = jwt_decode(res.token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      history.push("/home")
+      history.push("/")
     })
     .catch(err =>
       dispatch({

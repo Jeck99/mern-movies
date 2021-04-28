@@ -2,8 +2,6 @@ import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router';
-
-import { registerUserToDb } from "../service/users-service";
 import { registerUser } from "../redux/actions/authActions";
 const mapStateToProps = state => ({
     auth: state.auth,
