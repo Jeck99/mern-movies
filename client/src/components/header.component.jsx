@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function HeaderComponent() {
     const classes = useStyles();
+
     return (
         <div>
             <AppBar position="static">
@@ -41,7 +42,8 @@ export default function HeaderComponent() {
                     <Link to='/'>Home</Link>
                     <Link to='/add-movie'>NEW</Link>
                     <Link to='/movies'>Movies</Link>
-                    <Button color="inherit">Login</Button>
+                    <Link to='/register' color="inherit">register</Link>
+                    <Link to='/Login' color="inherit">Login</Link>
                     <Avatar alt="avatar" src="pictures/1046436.jpg" className={classes.large} />
                 </Toolbar>
             </AppBar>
