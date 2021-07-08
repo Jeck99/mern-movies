@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/authActions";
 import { withRouter } from 'react-router';
 
-
 const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
