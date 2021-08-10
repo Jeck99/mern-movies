@@ -1,4 +1,4 @@
-const movieModel = require('../models/movie-model'); //import model from movie-model
+ const movieModel = require('../models/movie-model'); //import model from movie-model
 
 /** 
 *get all movies from movies collection

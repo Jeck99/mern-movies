@@ -4,11 +4,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
-
+import { withRouter } from 'react-router';
+import { logoutUser } from "../redux/actions/authActions";
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
@@ -28,8 +32,15 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
     }
 }));
-export default function HeaderComponent() {
+function HeaderComponent(props) {
     const classes = useStyles();
+
+    const onLogoutClick = e => {
+        e.preventDefault();
+        props.logoutUser(props.history);
+        window.location.href = "/";
+    };
+    const { name, email } = props.auth.user;
     return (
         <div>
             <AppBar position="static">
@@ -38,13 +49,27 @@ export default function HeaderComponent() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>Movies App</Typography>
-                    <Link to='/'>Home</Link>
-                    <Link to='/add-movie'>NEW</Link>
-                    <Link to='/movies'>Movies</Link>
-                    <Button color="inherit">Login</Button>
+
+                    {
+                        props.auth.isAuthenticated ?
+                            <React.Fragment>
+                                <span>{name} : {email}</span>
+                                <Link to='/home'>Home</Link>
+                                <Link to='/add-movie'>NEW</Link>
+                                <Link to='/movies'>Movies</Link>
+                                <button onClick={onLogoutClick}>Log Out</button>
+                            </React.Fragment>
+                            :
+                            <React.Fragment>
+                                <Link to='/register' color="inherit">register</Link>
+                                <Link to='/' color="inherit">Login</Link>
+                            </React.Fragment>
+
+                    }
                     <Avatar alt="avatar" src="pictures/1046436.jpg" className={classes.large} />
                 </Toolbar>
             </AppBar>
         </div>
     )
 }
+export default withRouter(connect(mapStateToProps, { logoutUser })(HeaderComponent))
