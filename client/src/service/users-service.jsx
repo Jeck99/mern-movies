@@ -1,5 +1,5 @@
 // const PORT = process.env.PORT || 8080;
-const API = process.env.NODE_ENV === 'production' ? `https://Usersmern.herokuapp.com` : 'http://localhost:8080';
+const API = process.env.NODE_ENV === 'production' ? `https://moviesmern.herokuapp.com` : 'http://localhost:8080';
 /**
  * async function that updating the Users state
  * and returns the Users
