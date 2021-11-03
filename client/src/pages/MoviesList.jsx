@@ -28,6 +28,30 @@ export default function MoviesList(props) {
             },
         },
         {
+            name: "image",
+            label: "Image",
+            options: {
+                filter: true,
+                sort: true
+            },
+        },
+        {
+            name: "synopsis",
+            label: "Synopsis",
+            options: {
+                filter: true,
+                sort: true
+            },
+        },
+        {
+            name: "movieToLink",
+            label: "Link",
+            options: {
+                filter: true,
+                sort: true
+            },
+        },
+        {
             name: "rating",
             label: "Rating",
             options: {
@@ -36,21 +60,14 @@ export default function MoviesList(props) {
             },
         },
         {
-            name: "createdAt",
+            name: "date",
             label: "Created At",
             options: {
                 filter: true,
                 sort: true
             },
         },
-        {
-            name: "updatedAt",
-            label: "Last Update",
-            options: {
-                filter: true,
-                sort: true
-            },
-        }
+
     ]
     return (
         <div>

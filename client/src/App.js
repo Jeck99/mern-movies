@@ -19,6 +19,7 @@ import NotFound from "./components/404";
 import './App.css';
 import MoviesList from "./pages/MoviesList";
 import HeaderComponent from "./components/header.component";
+import AddMovie from "./pages/Add-Movie";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -54,6 +55,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/movies" component={MoviesList} />
+            <PrivateRoute exact path="/add-movie" component={AddMovie} />
             <Route
               component={localStorage.jwtToken ? Home : NotFound}
             />

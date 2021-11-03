@@ -1,8 +1,6 @@
 const dotenv = require("dotenv");
-dotenv.config();
-
+dotenv.config(); 
 //general imports:
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -18,8 +16,8 @@ const passportFunc = require("./config/passport");
 //configuration of the port based on the env
 const PORT = process.env.PORT || 8080;
 //use of body-parser in order to reach req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded())
+app.use(express.json({extended:true}));
+app.use(express.urlencoded({extended:true}));
 //use of cors so our server will be able to get requests
 app.use(cors())
 db.on('error', () => { console.log("connection error") })

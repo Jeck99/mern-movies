@@ -6,6 +6,9 @@ const Schema = mongoose.Schema;
 const Movie = new Schema({
     //field_name : {type of the value,is it required?}
     movieName:String ,
+    linkToMovie:String ,
+    synopsis:String ,
+    image:String ,
     rating: Number,
     date: {
         type: Date,
