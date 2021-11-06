@@ -1,5 +1,6 @@
 // import MoviesRouter from './Router';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import './App.css';
 
 // Utils
 import jwt_decode from "jwt-decode";
@@ -10,17 +11,9 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
 
-// Components
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import PrivateRoute from "./components/PrivateRoute";
-import Home from "./pages/Home";
-import NotFound from "./components/404";
-import './App.css';
-import MoviesList from "./pages/MoviesList";
+import MoviesRouter from "./Router";
 import HeaderComponent from "./components/header.component";
-import AddMovie from "./pages/Add-Movie";
-
+import Footer from './components/footer';
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -46,23 +39,15 @@ if (localStorage.jwtToken) {
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <div className="App">
+    <div className="App">
+      <Provider store={store}>
+        <Router>
         <HeaderComponent />
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <PrivateRoute exact path="/home" component={Home} />
-            <PrivateRoute exact path="/movies" component={MoviesList} />
-            <PrivateRoute exact path="/add-movie" component={AddMovie} />
-            <Route
-              component={localStorage.jwtToken ? Home : NotFound}
-            />
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+          <MoviesRouter />
+        <Footer />
+        </Router>
+      </Provider>
+    </div>
   );
 }
 export default App;

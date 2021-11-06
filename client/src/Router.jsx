@@ -1,22 +1,25 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router-dom'
-import Home from './pages/Home';
-import MoviesList from "./pages/MoviesList";
-import HeaderComponent from "./components/header.component";
-import AddMovie from "./pages/Add-Movie";
+import { Switch, Route } from 'react-router-dom'
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Home from "./pages/Home";
+import NotFound from "./components/404";
+import MoviesList from "./pages/MoviesList";
+import AddMovie from "./pages/Add-Movie";
 export default function MoviesRouter() {
     return (
-        <Router>
-            <HeaderComponent />
+        <>
             <Switch>
-                <Route exact path='/movies' component={MoviesList} />
-                <Route exact path='/add-movie' component={withRouter(AddMovie)} />
-                <Route exact path='/register' component={withRouter(Register)} />
-                <Route exact path='/login' component={withRouter(Login)} />
-                <Route exact path='/' component={withRouter(Home)} />
+                <Route exact path="/" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <PrivateRoute exact path="/home" component={Home} />
+                <PrivateRoute exact path="/movies" component={MoviesList} />
+                <PrivateRoute exact path="/add-movie" component={AddMovie} />
+                <Route
+                    component={localStorage.jwtToken ? Home : NotFound}
+                />
             </Switch>
-        </Router>
+        </>
     )
 }
