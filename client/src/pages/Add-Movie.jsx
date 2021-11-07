@@ -34,7 +34,7 @@ export default function AddMovie() {
                 <label htmlFor="movieName">Movie Name:</label>
                 <input onChange={updateMovieName} type="text" />
                 <label htmlFor="movieImage">Movie image:</label>
-                <input onChange={updateMovieImage} type="file" />
+                <input onChange={updateMovieImage} type="url" />
                 <label htmlFor="movieSyno">Movie synopsis:</label>
                 <input onChange={updateMovieSyno} type="text" />
                 <label htmlFor="movieLink">Movie link:</label>
