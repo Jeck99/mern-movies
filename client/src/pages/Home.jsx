@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getAllMovies } from "../service/movies-service";
+import { getAllMovies, getMovieByName } from "../service/movies-service";
 import MovieCard from "../components/movie-card.component";
 import './home.css';
 export default function Home(props) {
     const [movies, setMovies] = useState([]);
-    const [movie, setMovie] = useState({});
-    const [paramInput, setParamInput] = useState(" ");
+    const [paramInput, setParamInput] = useState("");
     const [sortMethod, setSortMethod] = useState("date");
-    const [searchMethod, setSearchMethod] = useState("");
+    const [searchMethod, setSearchMethod] = useState("movieName");
     useEffect(getMovies, [])
 
     function getMovies() {
@@ -34,15 +33,17 @@ export default function Home(props) {
             return a[field].toLowerCase() - b[field].toLowerCase();
         })
     }
-    function serchMoviesClick() {
-        console.log(getMax());
+    function serchMoviesClick(e) {
+        setParamInput(e.target.value)
+        if(e.target.value.length==0) return getMovies();
+        searchMethod == "movieName" ? getMovieByName(e.target.value).then((res) => { setMovies(res) }) : console.log(getMax());
     }
     function getMax() {
-        let oldestObject = movies[0];
+        let maxObject = movies[0];
         for (const item of movies) {
-            if (item[paramInput] > oldestObject[paramInput]) oldestObject = item;
+            if (item[searchMethod] > maxObject[searchMethod]) maxObject = item;
         }
-        return oldestObject;
+        return maxObject;
     }
     return (
         <>
@@ -57,15 +58,15 @@ export default function Home(props) {
             <div id="serch-div">
                 <button onClick={serchMoviesClick}>SEARCH</button>
                 <select id="sort_select" onChange={(e) => { setSearchMethod(e.target.value) }}>
-                    <option value="movieName">Name</option>
-                    <option value="rating">Rating</option>
-                    <option value="date">Added At</option>
+                    <option value="movieName">Movie by Name</option>
+                    <option value="rating">Best Movie</option>
+                    <option value="date">Last Movie Added</option>
                 </select>
-                <input type="text" onChange={(e) => { setParamInput(e.target.value) }} />
+                <input type="text" onChange={serchMoviesClick} />
             </div>
             <div id={"homeDiv"}>
                 {movies ? React.Children.toArray(movies.map((item) => {
-                    return <MovieCard image={item.image} title={item.movieName} text={item.rating} />
+                    return <MovieCard movieItem={item} />
                 })) : ''}
             </div>
         </>

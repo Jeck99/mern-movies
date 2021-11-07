@@ -44,7 +44,7 @@ export default function MoviesList(props) {
             },
         },
         {
-            name: "movieToLink",
+            name: "linkToMovie",
             label: "Link",
             options: {
                 filter: true,

@@ -1,4 +1,4 @@
- const movieModel = require('../models/movie-model'); //import model from movie-model
+const movieModel = require('../models/movie-model'); //import model from movie-model
 
 /** 
 *get all movies from movies collection
@@ -38,12 +38,12 @@ async function getMovieById(req, res) {
  */
 async function getMovieByName(req, res) {
     let movieName = req.params.movieName;
-    await movieModel.find({movieName: { $regex: movieName, $options: "i" } },(err, movieItem) => {
+    await movieModel.find({ movieName: { $regex: movieName, $options: "i" } }, (err, movieItem) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+        return res.status(400).json({ success: false, error: err })
         };
         if (!movieItem) {
-            res.status(404).json({ success: false, message: "No movie available" })
+            return res.status(404).json({ success: false, message: "No movie available" })
         }
         res.status(200).json({ success: true, data: movieItem })
     })
@@ -72,8 +72,8 @@ async function deleteMovie(req, res) {
             res.status(400).json({ success: false, error: err })
         };
         res.status(201).json({ success: true, data: doc, message: "Movie deleted successfully" })
-    }) 
-} 
+    })
+}
 /**
  * update a movie by id in movies collection
  * @param {*} req 
@@ -83,7 +83,7 @@ async function updateMovie(req, res) {
     movieModel.findByIdAndUpdate(req.params.id, req.body.movie, (err, doc) => {
         if (err) {
             res.status(400).json({ success: false, error: err })
-        };        
+        };
         res.status(300).json({ success: true, data: doc, message: "Movie updated successfully" })
     })
 }

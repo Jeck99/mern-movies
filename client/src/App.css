@@ -41,6 +41,8 @@ form{
   flex-direction: column;
   align-content: space-between;
   text-align: center;
+  align-items: center;
+  gap: 3vh;
 }
 form input{
   width: 30vw;
