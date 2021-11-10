@@ -6,10 +6,10 @@ const movieModel = require('../models/movie-model'); //import model from movie-m
 async function getAllMovies(req, res) {
     await movieModel.find((err, results) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         };
-        if (!results.length) {
-            res.status(404).json({ success: false, message: "No movies available" })
+        if (results.length==0) {
+           return res.json({ success: false, message: "No movies available" })
         }
         console.log("results:", JSON.stringify(results));
         res.status(200).json({ success: true, data: results });
@@ -23,10 +23,10 @@ async function getAllMovies(req, res) {
 async function getMovieById(req, res) {
     await movieModel.findById(req.params.id, (err, movieItem) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         };
         if (!movieItem) {
-            res.status(404).json({ success: false, message: "No movie available" })
+            return res.status(404).json({ success: false, message: "No movie available" })
         }
         res.status(200).json({ success: true, data: movieItem })
     })
@@ -56,7 +56,7 @@ async function getMovieByName(req, res) {
 async function saveNewMovie(req, res) {
     movieModel.insertMany(req.body.movie, (err) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         };
         res.status(201).json({ success: true, message: req.body.movie })
     })
@@ -69,7 +69,7 @@ async function saveNewMovie(req, res) {
 async function deleteMovie(req, res) {
     movieModel.findByIdAndRemove(req.params.id, (err, doc) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         };
         res.status(201).json({ success: true, data: doc, message: "Movie deleted successfully" })
     })
@@ -82,7 +82,7 @@ async function deleteMovie(req, res) {
 async function updateMovie(req, res) {
     movieModel.findByIdAndUpdate(req.params.id, req.body.movie, (err, doc) => {
         if (err) {
-            res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err })
         };
         res.status(300).json({ success: true, data: doc, message: "Movie updated successfully" })
     })
